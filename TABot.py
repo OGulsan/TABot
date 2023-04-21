@@ -1,11 +1,11 @@
 import discord
 import os
-from HelperFunctions import getGeneralTextChannelFromGuilds
+import HelperFunctions
 from dotenv import load_dotenv
 
 class MyClient(discord.Client):
     async def on_ready(self):
-        general_chat = getGeneralTextChannelFromGuilds(self.guilds)
+        general_chat = HelperFunctions.getGeneralTextChannelFromGuilds(self.guilds)
         await general_chat.send("Greetings students!") # sends a greeting message into the channel
 
     async def on_member_join(self, member):
@@ -15,6 +15,8 @@ class MyClient(discord.Client):
     async def on_message(self, message):
         if message.author == self.user:
             return
+        if(HelperFunctions.isCommand(message)):
+            await message.channel.send('Commands coming to a server near you very soon!')
         
 
 intents = discord.Intents.default() # establish intents to pass into Client constructor
