@@ -1,13 +1,14 @@
 import discord
 import os
 import commands
+from commands import getGeneralTextChannel
 from dotenv import load_dotenv
 
 class MyClient(discord.Client):
     async def on_ready(self):
-        for guild in self.guilds: # for each guild
-            general_chat = discord.utils.get(guild.channels, name = "general") # grabs the general text channel
-            await general_chat.send("Greetings students!") # sends a greeting message into the channel
+        general_chat = getGeneralTextChannel(self.guilds)
+        await general_chat.send("Greetings students!") # sends a greeting message into the channel
+
 
     async def on_message(self, message):
         if message.author == self.user:
