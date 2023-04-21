@@ -1,7 +1,6 @@
 import discord
 import os
-import commands
-from commands import getGeneralTextChannel
+from HelperFunctions import getGeneralTextChannel
 from dotenv import load_dotenv
 
 class MyClient(discord.Client):
