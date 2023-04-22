@@ -36,4 +36,4 @@ load_dotenv(".env")  # loads variables from .env
 token = os.getenv("DISCORD_BOT_TOKEN") # retrieve my BOT's token
 
 client = MyClient(intents=intents) # create an instance of MyClient and pass in wanted intents
-client.run(token)
+client.run(token) # type: ignore
