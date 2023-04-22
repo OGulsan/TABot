@@ -1,6 +1,7 @@
 import requests
 import os
 import sys
+from datetime import datetime
 from dotenv import load_dotenv
 
 
@@ -30,11 +31,19 @@ def printAssignments(courseID):
             assignment_id = assignment['id']
             assignment_name = assignment['name']
             assignment_due_date = assignment['due_at']
+            date_object = datetime.strptime(assignment_due_date, '%Y-%m-%dT%H:%M:%SZ')
+
+            # Extract the month, day, and time components
+            month = date_object.month
+            day = date_object.day
+            time = date_object.time()
+            
+
             # ... perform other operations with assignment object
-            print(i)
+            print(i + 1)
             print("Assignment ID: ", assignment_id)
             print("Assignment Name: ", assignment_name)
-            print("Assignment Due Date: ", assignment_due_date)
+            print(f'Assignment due date: {month}/{day} at {time}')
             print("----------------------------------")
             print()
         #print(type(assignments[0]))
