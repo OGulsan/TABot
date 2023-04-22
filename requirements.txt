@@ -1,6 +1,3 @@
-# Python version
-python==3.11.3
-
 # Project dependencies
 aiohttp==3.8.4
 aiosignal==1.3.1
