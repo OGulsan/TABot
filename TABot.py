@@ -23,7 +23,7 @@ class MyClient(discord.Client):
                 assignments = canvas.returnAssignmentsDict(courseID=courseID)
 
             for key, value in assignments.items():
-                await message.channel.send('{}: {}\ndue on {}\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date']))
+                await message.channel.send('{}: {}\ndue on {}\n{} possible points\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date'], value['points_possible']))
 
             
         

@@ -42,7 +42,8 @@ def returnAssignmentsDict(courseID):
             assignment_key = {
             'assignment_id': assignment['id'],
             'assignment_name': assignment['name'],
-            'assignment_due_date': '{}/{} at {}'.format(month, day, time)}  
+            'assignment_due_date': '{}/{} at {}'.format(month, day, time),
+            'points_possible': assignment['points_possible']}  
 
             # add asignment and it's info to dict
             assignmentDict['Assignment {}'.format(i+1)] = assignment_key
