@@ -1,7 +1,10 @@
 import discord
+import canvas
 import os
 import HelperFunctions
 from dotenv import load_dotenv
+
+courseID = 123546
 
 class MyClient(discord.Client):
     async def on_ready(self):
@@ -16,7 +19,13 @@ class MyClient(discord.Client):
         if message.author == self.user:
             return
         if(HelperFunctions.isCommand(message)):
-            await message.channel.send('Commands coming to a server near you very soon!')
+            if(message.content[1:] == "assignments"):
+                assignments = canvas.returnAssignmentsDict(courseID=courseID)
+
+            for key, value in assignments.items():
+                await message.channel.send('{}: {}\ndue on {}\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date']))
+
+            
         
 
 intents = discord.Intents.default() # establish intents to pass into Client constructor
