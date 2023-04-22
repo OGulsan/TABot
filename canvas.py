@@ -15,7 +15,7 @@ headers = {
     'Authorization': 'Bearer {}'.format(access_token)
 }
 
-def printAssignments(courseID):
+def returnAssignmentsDict(courseID):
     # Set up the URL for the assignments API endpoint
     url = '{}/courses/{}/assignments'.format(api_url, courseID)
 
@@ -26,27 +26,28 @@ def printAssignments(courseID):
         # Request was successful, parse the response into a list of assignments
         assignments = response.json()
 
+        # init dict to contain relevant information about assignments
+        assignmentDict = {}
+
         for i,assignment in enumerate(assignments):
-            # display info about each assignment
-            assignment_id = assignment['id']
-            assignment_name = assignment['name']
-            assignment_due_date = assignment['due_at']
-            date_object = datetime.strptime(assignment_due_date, '%Y-%m-%dT%H:%M:%SZ')
+            # convert string representation of due date into datetime object
+            date_object = datetime.strptime(assignment['due_at'], '%Y-%m-%dT%H:%M:%SZ')
 
             # Extract the month, day, and time components
             month = date_object.month
             day = date_object.day
             time = date_object.time()
             
+            # build up assignment key
+            assignment_key = {
+            'assignment_id': assignment['id'],
+            'assignment_name': assignment['name'],
+            'assignment_due_date': '{}/{} at {}'.format(month, day, time)}  
 
-            # ... perform other operations with assignment object
-            print(i + 1)
-            print("Assignment ID: ", assignment_id)
-            print("Assignment Name: ", assignment_name)
-            print(f'Assignment due date: {month}/{day} at {time}')
-            print("----------------------------------")
-            print()
-        #print(type(assignments[0]))
+            # add asignment and it's info to dict
+            assignmentDict['Assignment {}'.format(i+1)] = assignment_key
+
+        return assignmentDict
     else:
         # Request failed
         print('Failed to list courses. Status code: {}'.format(response.status_code))
@@ -54,4 +55,8 @@ def printAssignments(courseID):
 
 if __name__ == '__main__':
     courseID = input("Enter course id you want the assignment information about: ")
-    printAssignments(courseID=courseID)
+    # assignments: key - assignment number, value - dict of info about assignment
+    assignments = returnAssignmentsDict(courseID=courseID)
+
+    for key, value in assignments.items():
+        print('{}: {}\ndue on {}\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date']))
