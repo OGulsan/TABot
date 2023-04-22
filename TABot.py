@@ -13,7 +13,7 @@ class MyClient(discord.Client):
 
     async def on_member_join(self, member):
         general_chat = discord.utils.get(member.guild.text_channels, name = "general") # grabs the general text channel
-        await general_chat.send((f'Hello {member.name} and welcome to the {member.guild.name} server!'))
+        await general_chat.send((f'Hello {member.mention} and welcome to the {member.guild.name} server!'))
 
     async def on_message(self, message):
         if message.author == self.user:
