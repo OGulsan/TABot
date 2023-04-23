@@ -22,8 +22,12 @@ class MyClient(discord.Client):
             if(message.content[1:] == "assignments"):
                 assignments = canvas.returnAssignmentsDict(courseID=courseID)
 
+            output = '```'
             for key, value in assignments.items():
-                await message.channel.send('{}: {}\ndue on {}\n{} possible points\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date'], value['points_possible']))
+                output += '{}: {}\ndue on {}\n{} possible points\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date'], value['points_possible'])
+            
+            output += '```'
+            await message.channel.send(output)
 
             
         
