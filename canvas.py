@@ -28,24 +28,29 @@ def returnAssignmentsDict(courseID):
 
         # init dict to contain relevant information about assignments
         assignmentDict = {}
-
+        
         for i,assignment in enumerate(assignments):
-            # convert string representation of due date into datetime object
-            date_object = datetime.strptime(assignment['due_at'], '%Y-%m-%dT%H:%M:%SZ')
-
-            # Extract the month, day, and time components
-            month = date_object.month
-            day = date_object.day
-            time = date_object.time()
-            
             # build up assignment key
             assignment_key = {
             'assignment_id': assignment['id'],
             'assignment_name': assignment['name'],
-            'assignment_due_date': '{}/{} at {}'.format(month, day, time),
             'points_possible': assignment['points_possible']}  
 
-            # add asignment and it's info to dict
+            # check if assignment has no due date
+            if assignment['due_at'] is None:
+                assignment_key['assignment_due_date'] = 'No due date'
+            else:
+                # convert string representation of due date into datetime object
+                date_object = datetime.strptime(assignment['due_at'], '%Y-%m-%dT%H:%M:%SZ')
+
+                # Extract the month, day, and time components
+                month = date_object.month
+                day = date_object.day
+                time = date_object.time()
+                # set the assignments due date 
+                assignment_key['assignment_due_date'] = '{}/{} at {}'.format(month, day, time)
+
+            # add assignment and it's info to dict
             assignmentDict['Assignment {}'.format(i+1)] = assignment_key
 
         return assignmentDict
