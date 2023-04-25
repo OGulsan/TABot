@@ -65,4 +65,7 @@ if __name__ == '__main__':
     assignments = returnAssignmentsDict(courseID=courseID)
 
     for key, value in assignments.items():
-        print('{}: {}\ndue on {}\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date']))
+        if(value['assignment_due_date'] == 'No due date'):
+            print('{}: {}\n{}\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date']))
+        else:
+            print('{}: {}\ndue on {}\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date']))

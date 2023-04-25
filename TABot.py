@@ -34,7 +34,12 @@ class MyClient(discord.Client):
                 # build out Clients response to command
                 response = '```'
                 for key, value in assignments.items():
-                    response += '{}: {}\ndue on {}\n{} possible points\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date'], value['points_possible'])
+                    if(value['assignment_due_date'] == 'No due date'):
+                        response += '{}: {}\n{}\n{} possible points\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date'], value['points_possible'])
+                    else:
+                        response += '{}: {}\ndue on {}\n{} possible points\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date'], value['points_possible'])
+
+                    
                 response += '```'
 
                 await message.channel.send(response)
