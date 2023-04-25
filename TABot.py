@@ -1,11 +1,12 @@
-import discord
-
-from typing import Any
-import canvas
-import OpenAI
 import os
-import HelperFunctions
+from typing import Any
+
+import discord
 from dotenv import load_dotenv
+
+import canvas
+import HelperFunctions
+import OpenAI
 
 courseID = 123546
 

@@ -1,5 +1,6 @@
 import tiktoken
 
+
 def num_tokens_from_messages(messages, model):
     """Returns the number of tokens used by a list of messages."""
     try:

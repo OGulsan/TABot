@@ -1,9 +1,9 @@
-import requests
 import os
 import sys
 from datetime import datetime
-from dotenv import load_dotenv
 
+import requests
+from dotenv import load_dotenv
 
 api_url = "https://templeu.instructure.com/api/v1"
 

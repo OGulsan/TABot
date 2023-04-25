@@ -1,7 +1,9 @@
-import openai
-import TokenCounter
 import os
+
+import openai
 from dotenv import load_dotenv
+
+import TokenCounter
 
 MODEL = "gpt-3.5-turbo"
 
