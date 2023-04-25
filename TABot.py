@@ -1,5 +1,8 @@
 import discord
+
+from typing import Any
 import canvas
+import OpenAI
 import os
 import HelperFunctions
 from dotenv import load_dotenv
@@ -7,6 +10,10 @@ from dotenv import load_dotenv
 courseID = 123546
 
 class MyClient(discord.Client):
+    def __init__(self, *, intents: discord.Intents, **options: Any) -> None:
+        super().__init__(intents=intents, **options)
+        self.AIbot = OpenAI.TABotAI()
+
     async def on_ready(self):
         general_chat = HelperFunctions.getGeneralTextChannelFromGuilds(self.guilds)
         await general_chat.send("Greetings students!") # sends a greeting message into the channel
@@ -19,15 +26,23 @@ class MyClient(discord.Client):
         if message.author == self.user:
             return
         if(HelperFunctions.isCommand(message)):
-            if(message.content[1:] == "assignments"):
+            if(message.content.strip()[1:] == "assignments"):
+                # grab assignments from canvas API
                 assignments = canvas.returnAssignmentsDict(courseID=courseID)
 
-            output = '```'
-            for key, value in assignments.items():
-                output += '{}: {}\ndue on {}\n{} possible points\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date'], value['points_possible'])
-            
-            output += '```'
-            await message.channel.send(output)
+                # build out Clients response to command
+                response = '```'
+                for key, value in assignments.items():
+                    response += '{}: {}\ndue on {}\n{} possible points\n-----------------\n'.format(key, value['assignment_name'], value['assignment_due_date'], value['points_possible'])
+                response += '```'
+
+                await message.channel.send(response)
+            elif message.content.strip() == "!question":
+                await message.channel.send('Hey {}. It seems as if you are trying to use the {} command but forgot to ask the question!\nPlease enter the question in the following format: ```!question {}```'.format(message.author.mention, "'!question'", "{question here}"))
+            elif(message.content.strip()[1:10] == "question "):
+                await message.channel.send("{}".format(self.AIbot.answerQuestion(message=message)))
+
+
 
             
         
