@@ -3,7 +3,7 @@ import os
 import openai
 from dotenv import load_dotenv
 
-import TokenCounter
+import token_counter
 
 MODEL = "gpt-3.5-turbo"
 
@@ -42,7 +42,7 @@ class TABotAI():
         self.previousQuestion = {"role": "{}".format(self.previousRole), "content": "Previous question asked was: {}.".format(self.previousContent), "name": "{}".format(self.previousName.strip())}
 
         # for book keeping information, keep track of API usage
-        currentTokenCount = TokenCounter.num_tokens_from_messages(messages=msgs, model=MODEL)
+        currentTokenCount = token_counter.num_tokens_from_messages(messages=msgs, model=MODEL)
         self.totalTokenCount += currentTokenCount
 
         print("Total tokens count - {}\nToken count for this message {}".format(self.totalTokenCount + currentTokenCount, currentTokenCount))

@@ -5,8 +5,8 @@ import discord
 from dotenv import load_dotenv
 
 import canvas
-import HelperFunctions
-import OpenAI
+import helpers
+import ta_bot_ai
 
 load_dotenv(".env")  # loads variables from .env
 courseID = os.getenv("CANVAS_COURSE_ID")
@@ -14,10 +14,10 @@ courseID = os.getenv("CANVAS_COURSE_ID")
 class MyClient(discord.Client):
     def __init__(self, *, intents: discord.Intents, **options: Any) -> None:
         super().__init__(intents=intents, **options)
-        self.AIbot = OpenAI.TABotAI()
+        self.AIbot = ta_bot_ai.TABotAI()
 
     async def on_ready(self):
-        general_chat = HelperFunctions.getGeneralTextChannelFromGuilds(self.guilds)
+        general_chat = helpers.getGeneralTextChannelFromGuilds(self.guilds)
         await general_chat.send("Greetings students!") # sends a greeting message into the channel
 
     async def on_member_join(self, member):
@@ -27,7 +27,7 @@ class MyClient(discord.Client):
     async def on_message(self, message):
         if message.author == self.user:
             return
-        if(HelperFunctions.isCommand(message)):
+        if(helpers.isCommand(message)):
             if(message.content.strip()[1:] == "assignments"):
                 # grab assignments from canvas API
                 assignments = canvas.returnAssignmentsDict(courseID=courseID)
