@@ -8,7 +8,8 @@ import canvas
 import HelperFunctions
 import OpenAI
 
-courseID = 123546
+load_dotenv(".env")  # loads variables from .env
+courseID = os.getenv("CANVAS_COURSE_ID")
 
 class MyClient(discord.Client):
     def __init__(self, *, intents: discord.Intents, **options: Any) -> None:
@@ -57,7 +58,6 @@ intents = discord.Intents.default() # establish intents to pass into Client cons
 intents.message_content = True
 intents.members = True
 
-load_dotenv(".env")  # loads variables from .env
 token = os.getenv("DISCORD_BOT_TOKEN") # retrieve my BOT's token
 
 client = MyClient(intents=intents) # create an instance of MyClient and pass in wanted intents

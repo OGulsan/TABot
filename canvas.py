@@ -5,10 +5,12 @@ from datetime import datetime
 import requests
 from dotenv import load_dotenv
 
-api_url = "https://templeu.instructure.com/api/v1"
+
 
 load_dotenv(".env")  # loads variables from .env
-access_token = os.getenv("CANVAS_ACCESS_TOKEN") # retrieve Canvas Access token
+
+access_token = os.getenv("CANVAS_API_KEY") # retrieve Canvas Access token
+api_url = os.getenv("CANVAS_BASE_URL") # retrieve canvas api url
 
 # setup HTTP authentication header
 headers = {
