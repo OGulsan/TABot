@@ -2,10 +2,13 @@
 
 - `!assignments`: Fetches information about the assignments in this course from the Canvas API and displays them.
 - `!question <question here>`: Generates a response to your educational question using OpenAI's GPT-3.5-turbo model and provides an answer.
+- `!help`: Displays help information about the available commands.
+
 
 **Usage:**
 
 - To view assignments, simply type `!assignments` in the chat.
 - To ask a question, type `!question` followed by your question. For example: `!question What is the capital of France?`
+- For help with commands, type `!help` to view the available commands and their descriptions.
 
 Note: Make sure to use proper punctuation and capitalization for the best results with the `!question` command.
