@@ -8,7 +8,7 @@ import canvas
 import helpers
 import ta_bot_ai
 
-load_dotenv(".env")  # loads variables from .env
+load_dotenv(".env")  # Loads variables from .env
 courseID = os.getenv("CANVAS_COURSE_ID")
 
 class MyClient(discord.Client):
@@ -18,10 +18,10 @@ class MyClient(discord.Client):
 
     async def on_ready(self):
         general_chat = helpers.getGeneralTextChannelFromGuilds(self.guilds)
-        await general_chat.send("Greetings students!") # sends a greeting message into the channel
+        await general_chat.send("Greetings students!") # Sends a greeting message into the channel
 
     async def on_member_join(self, member):
-        general_chat = discord.utils.get(member.guild.text_channels, name = "general") # grabs the general text channel
+        general_chat = discord.utils.get(member.guild.text_channels, name = "general") # Grabs the general text channel
         await general_chat.send((f'Hello {member.mention} and welcome to the {member.guild.name} server!'))
 
     async def on_message(self, message):
@@ -35,10 +35,10 @@ class MyClient(discord.Client):
                     help_output = file.read()
                 await message.channel.send(help_output)
             elif(message.content.strip()[1:] == "assignments"):
-                # grab assignments from canvas API
+                # Grab assignments from canvas API
                 assignments = canvas.returnAssignmentsDict(courseID=courseID)
 
-                # build out Clients response to command
+                # Build out Clients response to command
                 response = '```'
                 for key, value in assignments.items():
                     if(value['assignment_due_date'] == 'No due date'):
@@ -56,15 +56,11 @@ class MyClient(discord.Client):
                 await message.channel.send("{}".format(self.AIbot.answerQuestion(message=message)))
 
 
-
-            
-        
-
-intents = discord.Intents.default() # establish intents to pass into Client constructor
+intents = discord.Intents.default() # Establish intents to pass into Client constructor
 intents.message_content = True
 intents.members = True
 
-token = os.getenv("DISCORD_BOT_TOKEN") # retrieve my BOT's token
+token = os.getenv("DISCORD_BOT_TOKEN") # Retrieve my BOT's token
 
-client = MyClient(intents=intents) # create an instance of MyClient and pass in wanted intents
+client = MyClient(intents=intents) # Create an instance of MyClient and pass in wanted intents
 client.run(token) # type: ignore
