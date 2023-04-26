@@ -28,7 +28,13 @@ class MyClient(discord.Client):
         if message.author == self.user:
             return
         if(helpers.isCommand(message)):
-            if(message.content.strip()[1:] == "assignments"):
+            if(message.content.strip() == "!help"):
+                # Open the text file
+                with open('help.txt', 'r') as file:
+                    # Read the contents of the file
+                    help_output = file.read()
+                await message.channel.send(help_output)
+            elif(message.content.strip()[1:] == "assignments"):
                 # grab assignments from canvas API
                 assignments = canvas.returnAssignmentsDict(courseID=courseID)
 
